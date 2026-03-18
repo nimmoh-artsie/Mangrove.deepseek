@@ -1,0 +1,25 @@
+{
+    "name": "mangrove-cafe-system",
+    "version": "1.0.0",
+    "description": "E-Food Ordering System for Mangrove Café - Pure JavaScript, No Frameworks",
+    "main": "server/server.js",
+    "scripts": {
+      "start": "node server/server.js",
+      "dev": "node --watch server/server.js",
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": ["food-ordering", "cafe", "delivery", "javascript"],
+    "author": "Neema Wairimu Ng'ang'a",
+    "license": "MIT",
+    "dependencies": {
+      "mysql2": "^3.9.0",
+      "ws": "^8.16.0",
+      "dotenv": "^16.3.1"
+    },
+    "devDependencies": {
+      "nodemon": "^3.0.2"
+    },
+    "engines": {
+      "node": ">=18.0.0"
+    }
+  }
