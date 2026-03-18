@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mangrove Café - Authentic Swahili Cuisine Since 2001</title>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/styles.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%238B6B4D'>🌴</text></svg>">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo" onclick="window.showPage('menu')">
+                    <span class="logo-icon">🌴</span>
+                    <span class="logo-text">Mangrove Café</span>
+                    <span class="logo-badge">Since 2001</span>
+                </div>
+                
+                <div class="nav-menu" id="navMenu">
+                    <a href="#" onclick="window.showPage('menu')" class="nav-link" id="nav-menu">
+                        <span class="nav-icon">🍽️</span> Menu
+                    </a>
+                    <a href="#" onclick="window.showCart()" class="nav-link" id="nav-cart">
+                        <span class="nav-icon">🛒</span> Cart
+                        <span class="cart-badge" id="cartCount">0</span>
+                    </a>
+                    <a href="#" onclick="window.showPage('orders')" class="nav-link" id="nav-orders">
+                        <span class="nav-icon">📦</span> Orders
+                    </a>
+                    <div class="nav-link notification-container" id="notificationContainer">
+                        <a href="#" onclick="window.toggleNotifications()" class="nav-link">
+                            <span class="nav-icon">🔔</span> Notifications
+                            <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                        </a>
+                        <div class="notification-panel" id="notificationPanel">
+                            <div class="notification-header">
+                                <h3>Notifications</h3>
+                                <button onclick="window.markAllNotificationsRead()" class="btn-small">Mark all as read</button>
+                            </div>
+                            <div class="notifications-list" id="notificationsList">
+                                <div class="loading">Loading notifications...</div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="#" onclick="window.logout()" class="nav-link" id="nav-auth">Login</a>
+                </div>
+                
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+            </div>
+        </nav>
+
+        <!-- Main Content Container -->
+        <main class="container">
+            <!-- Loading Spinner -->
+            <div id="loadingSpinner" class="loading-spinner" style="display: none;">
+                <div class="spinner"></div>
+            </div>
+
+            <!-- ==================== LOGIN PAGE ==================== -->
+            <div id="loginPage" class="page">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo">🌴</div>
+                        <h2>Welcome Back to Mangrove Café</h2>
+                        <p>Authentic Swahili cuisine delivered to your doorstep</p>
+                    </div>
+                    
+                    <form id="loginForm" onsubmit="event.preventDefault(); window.handleLogin()">
+                        <div class="form-group">
+                            <label for="loginPhone">
+                                <span class="label-icon">📱</span> Phone Number
+                            </label>
+                            <input type="tel" id="loginPhone" placeholder="0712345678" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="loginPassword">
+                                <span class="label-icon">🔒</span> Password
+                            </label>
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary btn-block">
+                            <span class="btn-icon">🔓</span> Login
+                        </button>
+                        
+                        <p class="auth-switch">
+                            Don't have an account? 
+                            <a href="#" onclick="window.showPage('register')">Register here</a>
+                        </p>
+                        
+                        <div class="auth-features">
+                            <span>✨ 25+ Years of Swahili Taste</span>
+                            <span>🚚 Free delivery on orders > KES 1000</span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==================== REGISTER PAGE ==================== -->
+            <div id="registerPage" class="page">
+                <div class="auth-card">
+                    <div class="auth-header">
+                        <div class="auth-logo">🌴</div>
+                        <h2>Join Mangrove Café Family</h2>
+                        <p>Create an account for faster ordering</p>
+                    </div>
+                    
+                    <form id="registerForm" onsubmit="event.preventDefault(); window.handleRegister()">
+                        <div class="form-group">
+                            <label for="regName">
+                                <span class="label-icon">👤</span> Full Name
+                            </label>
+                            <input type="text" id="regName" placeholder="John Doe" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regPhone">
+                                <span class="label-icon">📱</span> Phone Number
+                            </label>
+                            <input type="tel" id="regPhone" placeholder="0712345678" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regEmail">
+                                <span class="label-icon">📧</span> Email (Optional)
+                            </label>
+                            <input type="email" id="regEmail" placeholder="john@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regPassword">
+                                <span class="label-icon">🔒</span> Password
+                            </label>
+                            <input type="password" id="regPassword" placeholder="Create a password" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="regBranch">
+                                <span class="label-icon">📍</span> Preferred Branch
+                            </label>
+                            <select id="regBranch" required>
+                                <option value="">Select your nearest branch</option>
+                            </select>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary btn-block">
+                            <span class="btn-icon">✨</span> Create Account
+                        </button>
+                        
+                        <p class="auth-switch">
+                            Already have an account? 
+                            <a href="#" onclick="window.showPage('login')">Login here</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+
+            <!-- ==================== MENU PAGE ==================== -->
+            <div id="menuPage" class="page">
+                <!-- Hero Section -->
+                <div class="menu-hero">
+                    <div class="hero-content">
+                        <h1>Authentic Swahili Cuisine</h1>
+                        <p>Over 25 years of serving the real taste of Lamu</p>
+                        <div class="hero-stats">
+                            <div class="stat-item">
+                                <span class="stat-value">25+</span>
+                                <span class="stat-label">Years of Tradition</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">98%</span>
+                                <span class="stat-label">Return Rate</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-value">80%</span>
+                                <span class="stat-label">Signature Dishes</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Tabs -->
+                <div class="category-tabs" id="categoryTabs"></div>
+
+                <!-- Menu Grid -->
+                <div class="menu-grid" id="menuItems"></div>
+            </div>
+
+            <!-- ==================== CART PAGE ==================== -->
+            <div id="cartPage" class="page">
+                <h2 class="page-title">Your Order</h2>
+                
+                <div class="cart-layout">
+                    <div class="cart-items" id="cartItems"></div>
+                    
+                    <div class="cart-sidebar">
+                        <div class="cart-summary-card">
+                            <h3>Order Summary</h3>
+                            
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span id="cartSubtotal">KES 0</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span>Delivery Fee</span>
+                                <span id="deliveryFee">KES 0</span>
+                            </div>
+                            
+                            <div class="summary-row">
+                                <span>VAT (16%)</span>
+                                <span id="cartTax">KES 0</span>
+                            </div>
+                            
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span id="cartTotal">KES 0</span>
+                            </div>
+                            
+                            <div class="delivery-time">
+                                <span class="time-icon">⏱️</span>
+                                Estimated delivery: 30-45 min
+                            </div>
+                            
+                            <button onclick="window.showCheckout()" class="btn-primary btn-block" id="checkoutBtn">
+                                <span class="btn-icon">✅</span> Proceed to Checkout
+                            </button>
+                            
+                            <button onclick="window.showPage('menu')" class="btn-secondary btn-block">
+                                <span class="btn-icon">🍽️</span> Continue Shopping
+                            </button>
+                        </div>
+                        
+                        <div class="promo-card">
+                            <h4>✨ Special Offer</h4>
+                            <p>Free delivery on orders above KES 1,000</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== CHECKOUT PAGE ==================== -->
+            <div id="checkoutPage" class="page">
+                <h2 class="page-title">Checkout</h2>
+                
+                <div class="checkout-layout">
+                    <div class="checkout-form">
+                        <form id="checkoutForm" onsubmit="event.preventDefault(); window.placeOrder()">
+                            <div class="form-section">
+                                <h3><span class="section-icon">📍</span> Delivery Details</h3>
+                                
+                                <div class="form-group">
+                                    <label for="orderType">Order Type</label>
+                                    <select id="orderType" onchange="window.toggleDeliveryAddress()" required>
+                                        <option value="pickup">Pickup from Café</option>
+                                        <option value="delivery" selected>Delivery to my address</option>
+                                    </select>
+                                </div>
+                                
+                                <div id="deliveryAddressGroup" class="form-group">
+                                    <label for="deliveryAddress">Delivery Address</label>
+                                    <textarea id="deliveryAddress" rows="3" placeholder="Enter your full address" required></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="deliveryNotes">Delivery Notes (Optional)</label>
+                                    <textarea id="deliveryNotes" rows="2" placeholder="e.g., Gate code, landmark, etc."></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h3><span class="section-icon">📝</span> Special Instructions</h3>
+                                <div class="form-group">
+                                    <textarea id="specialInstructions" rows="3" placeholder="Any special requests for your order?"></textarea>
+                                </div>
+                            </div>
+                            
+                            <div class="form-section">
+                                <h3><span class="section-icon">💰</span> Payment Method</h3>
+                                
+                                <div class="payment-options">
+                                    <label class="payment-option">
+                                        <input type="radio" name="paymentMethod" value="mpesa" checked>
+                                        <span class="payment-icon">📱</span>
+                                        <span class="payment-label">M-Pesa</span>
+                                        <span class="payment-badge">Fast & Secure</span>
+                                    </label>
+                                    
+                                    <label class="payment-option">
+                                        <input type="radio" name="paymentMethod" value="cash">
+                                        <span class="payment-icon">💵</span>
+                                        <span class="payment-label">Cash on Delivery</span>
+                                        <span class="payment-badge">Pay when you receive</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="order-summary-mini">
+                                <h4>Order Summary</h4>
+                                <div class="summary-row">
+                                    <span>Items:</span>
+                                    <span id="checkoutItemCount">0</span>
+                                </div>
+                                <div class="summary-row">
+                                    <span>Total:</span>
+                                    <span id="checkoutTotal">KES 0</span>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="btn-primary btn-block btn-large">
+                                <span class="btn-icon">✅</span> Place Order
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="checkout-sidebar">
+                        <div class="branch-info">
+                            <h4>📍 Your Branch</h4>
+                            <p id="selectedBranchName">Ongata Rongai</p>
+                            <p id="selectedBranchPhone">0712345678</p>
+                            <small>Open: 8:00 AM - 10:00 PM</small>
+                        </div>
+                        
+                        <div class="delivery-info">
+                            <h4>🚚 Delivery Info</h4>
+                            <ul>
+                                <li>Free delivery over KES 1,000</li>
+                                <li>Delivery time: 30-45 min</li>
+                                <li>Cash on delivery available</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ==================== ORDERS PAGE ==================== -->
+            <div id="ordersPage" class="page">
+                <h2 class="page-title">My Orders</h2>
+                
+                <div class="order-filters">
+                    <select id="orderStatusFilter" onchange="window.loadOrders()">
+                        <option value="">All Orders</option>
+                        <option value="pending">Pending</option>
+                        <option value="confirmed">Confirmed</option>
+                        <option value="preparing">Preparing</option>
+                        <option value="ready">Ready</option>
+                        <option value="out_for_delivery">Out for Delivery</option>
+                        <option value="delivered">Delivered</option>
+                    </select>
+                </div>
+                
+                <div id="ordersList" class="orders-list"></div>
+            </div>
+
+            <!-- ==================== ORDER DETAILS PAGE ==================== -->
+            <div id="orderDetailsPage" class="page">
+                <div id="orderDetails" class="order-details-container"></div>
+                
+                <div class="order-actions">
+                    <button onclick="window.showPage('orders')" class="btn-secondary">
+                        <span class="btn-icon">←</span> Back to Orders
+                    </button>
+                    
+                    <button onclick="window.trackOrder()" class="btn-primary" id="trackOrderBtn" style="display: none;">
+                        <span class="btn-icon">📍</span> Track Order
+                    </button>
+                    
+                    <button onclick="window.reorder()" class="btn-primary" id="reorderBtn" style="display: none;">
+                        <span class="btn-icon">🔄</span> Reorder
+                    </button>
+                </div>
+            </div>
+
+            <!-- ==================== STAFF DASHBOARD PAGE ==================== -->
+            <div id="staffDashboardPage" class="page">
+                <h2 class="page-title">Branch Dashboard</h2>
+                
+                <div class="branch-stats" id="branchStats"></div>
+                
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" onclick="window.switchDashboardTab('orders')">Orders</button>
+                    <button class="tab-btn" onclick="window.switchDashboardTab('riders')">Riders</button>
+                </div>
+                
+                <div id="dashboardOrdersTab" class="dashboard-tab active">
+                    <div class="order-filters">
+                        <select id="staffStatusFilter" onchange="window.loadBranchOrders()">
+                            <option value="">All Orders</option>
+                            <option value="pending">Pending</option>
+                            <option value="confirmed">Confirmed</option>
+                            <option value="preparing">Preparing</option>
+                            <option value="ready">Ready</option>
+                            <option value="out_for_delivery">Out for Delivery</option>
+                        </select>
+                    </div>
+                    
+                    <div id="branchOrders" class="orders-list staff-view"></div>
+                </div>
+                
+                <div id="dashboardRidersTab" class="dashboard-tab">
+                    <div id="ridersList" class="riders-list"></div>
+                </div>
+            </div>
+
+            <!-- ==================== RIDER DASHBOARD PAGE ==================== -->
+            <div id="riderDashboardPage" class="page">
+                <h2 class="page-title">My Deliveries</h2>
+                
+                <div class="rider-stats" id="riderStats"></div>
+                
+                <div id="riderDeliveryView" class="active-delivery"></div>
+                
+                <h3>Delivery History</h3>
+                <div id="riderHistory" class="delivery-history"></div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Mangrove Café</h4>
+                    <p>Authentic Swahili cuisine since 2001</p>
+                    <p>Serving the real taste of Lamu in Nairobi</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p>📞 Ongata Rongai: 0712345678</p>
+                    <p>📞 Lang'ata: 0723456789</p>
+                    <p>✉️ info@mangrovecafe.co.ke</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Hours</h4>
+                    <p>Monday - Sunday</p>
+                    <p>8:00 AM - 10:00 PM</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Mangrove Café. All rights reserved.</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Item Modal -->
+    <div id="itemModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="window.closeModal()">&times;</span>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+
+    <!-- Notification Popup Container -->
+    <div id="notificationPopup" class="notification-popup" style="display: none;"></div>
+
+    <!-- JavaScript Files -->
+    <script src="/js/app.js"></script>
+    <script src="/js/auth.js"></script>
+    <script src="/js/cart.js"></script>
+    <script src="/js/orders.js"></script>
+    <script src="/js/delivery.js"></script>
+    <script src="/js/notifications.js"></script>
+</body>
+</html>
